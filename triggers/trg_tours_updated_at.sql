@@ -1,0 +1,3 @@
+CREATE TRIGGER trg_tours_updated_at
+BEFORE UPDATE ON tours
+FOR EACH ROW EXECUTE FUNCTION updated_at();
