@@ -1,0 +1,1 @@
+CREATE INDEX idx_tour_stops_tour_position ON tour_stops(tour_id, position);

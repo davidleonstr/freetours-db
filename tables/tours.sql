@@ -6,6 +6,13 @@
 -- rendered in booking emails — see plugins/mailer.js).
 -- meeting_point_osm_id is optional, for round-tripping an OSM
 -- node/way/relation id (e.g. from Nominatim) if the caller has one.
+--
+-- Beyond the single required meeting point, a tour can also have any
+-- number of intermediate stops/waypoints along its route — see
+-- tables/tour_stops.sql.
+--
+-- duration_hours is DOUBLE PRECISION (not an integer) so tours can be
+-- scheduled in fractional lengths, e.g. 2.5 hours, not just whole hours.
 CREATE TABLE tours (
     id                       UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name                     VARCHAR(255) UNIQUE NOT NULL,
@@ -17,7 +24,7 @@ CREATE TABLE tours (
     meeting_point_lng        DOUBLE PRECISION NOT NULL,
     meeting_point_osm_id     VARCHAR(255),
 
-    duration_hours           SMALLINT CHECK (duration_hours > 0),
+    duration_hours           DOUBLE PRECISION CHECK (duration_hours > 0),
     capacity                 INTEGER CHECK (capacity > 0),  -- max participants per departure
     is_active                BOOLEAN NOT NULL DEFAULT true,
 
